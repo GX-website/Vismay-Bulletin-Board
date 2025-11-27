@@ -16,8 +16,8 @@ export default function Index() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div>
-                  <Button asChild>
-                    <Link href='users.create'>Create a User</Link>
+                <Button asChild>
+                    <Link href="/users/create">Create a User</Link>
                 </Button>
             </div>
         </AppLayout>
