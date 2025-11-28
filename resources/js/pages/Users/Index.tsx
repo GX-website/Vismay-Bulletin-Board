@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
+import { users } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { route } from 'ziggy-js';
@@ -8,7 +8,7 @@ import { route } from 'ziggy-js';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: '/users',
+        href: users().url,
     },
 ];
 
