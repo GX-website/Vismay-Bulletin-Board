@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
+import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -15,9 +16,9 @@ export default function Index() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
-            <div>
+            <div className='m-4'>
                 <Button asChild>
-                    <Link href="/users/create">Create a User</Link>
+                    <Link href={route('users.create')}>Create a User</Link>
                 </Button>
             </div>
         </AppLayout>
