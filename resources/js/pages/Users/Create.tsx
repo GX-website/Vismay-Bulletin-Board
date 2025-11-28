@@ -6,6 +6,8 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { route } from 'ziggy-js';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { CircleAlert  } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,23 +16,41 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const { data, setData, post, processing, errors } = useForm ({
-    fullname: '',
-    email: '',
-    department: ''
-})
 
-const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(data);
-    post(route('users.store'));
-}
+export default function Create() {
 
-export default function Index() {
+    const { data, setData, post, processing, errors } = useForm({
+        fullname: '',
+        email: '',
+        department: '',
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        post(route('users_store'));
+    };
+    
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create a New Account" />
             <div className='w-8/12 p-4'>
+
+                {/* Display Errors */}
+
+                {Object.keys(errors).length > 0 && (
+                    <Alert variant="default">
+                        <CircleAlert className='h-4 w-4' />
+                        <AlertTitle>Heads up!</AlertTitle>
+                        <AlertDescription>
+                           <ul>
+                                {Object.entries(errors).map(([key, message]) => (
+                                    <li key={key}>{message as string}</li>
+                                ))}
+                           </ul>
+                        </AlertDescription>
+                    </Alert>
+                )}
+
                     <form onSubmit={handleSubmit} action="" className='space-y-4'>
                         <div className='gap-1.5'>
                             <Label htmlFor="fullname" className='px-1'>Fullname</Label>

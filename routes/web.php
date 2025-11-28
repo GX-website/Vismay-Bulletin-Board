@@ -15,9 +15,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-    Route::get('/users',[UserController::class, 'index'])->name('users.index');
-    Route::post('/users',[UserController::class, 'store'])->name('users.store');
-    Route::get('/users/create', [UserController::class, "create"])->name('users.create');
+    Route::get('/users',[UserController::class, 'index'])->name('users_index');
+    Route::post('/users', [UserController::class, 'store'])->name('users_store');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users_create');
 });
 
 require __DIR__.'/settings.php';
