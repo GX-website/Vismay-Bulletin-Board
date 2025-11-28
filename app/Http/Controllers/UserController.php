@@ -16,4 +16,12 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Create');
     }
+
+    public function store(Request $request) {
+        $request->validated([
+            'name' => 'required|string|max:250',
+            'email' => 'required|string|max:250',
+            'department' => 'required|string|max:250'
+        ]);
+    }
 }
