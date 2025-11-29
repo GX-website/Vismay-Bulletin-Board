@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Users/Index', []);
+        $accounts = Account::all(); 
+        return Inertia::render('Users/Index', compact('accounts'));
     }
 
     public function create()
@@ -27,5 +28,11 @@ class UserController extends Controller
 
         Account::create($request->all());
         return redirect()->route('users_index')->with('message', 'User Account created successfully');
+    }
+
+    public function destroy(Account $accounts) {
+        $fullname = $accounts->fullname;
+        $accounts->delete();
+        return redirect()->route('users_index')->with('message', "Employee `${fullname}` deleted successfully");
     }
 }

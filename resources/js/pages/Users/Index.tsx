@@ -4,9 +4,20 @@ import AppLayout from '@/layouts/app-layout';
 import { users_index } from '@/routes';
 // import { users } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { Megaphone } from 'lucide-react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Megaphone, Trash, Pencil  } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { route } from 'ziggy-js';
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -15,21 +26,39 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+interface Account {
+    id: number,
+    fullname: string,
+    email: string,
+    department: string,
+}
+
 interface PageProps{
     flash: {
         message?: string
-    }
+    },
+
+    accounts: Account[]
 }
 
 export default function Index() {
 
-    const { flash } = usePage().props as PageProps;
+    const { accounts, flash } = usePage().props as PageProps;
+
+    const {processing, delete: destroy} = useForm();
+    
+    const handleDelete = (id: number, fullname: string) => {
+        if(confirm(`Do you want to delete employee ${id}. ${fullname}`)) {
+            destroy(`/users/${id}`);
+        }
+    }
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div className='m-4'>
                 <Button asChild>
-                    <Link href='/users/create'>Create user</Link>
+                    <Link href='/users/create'>Add Employee</Link>
                 </Button>
             </div>
             <div className='m-4'>
@@ -45,6 +74,38 @@ export default function Index() {
                     )}
                 </div>
             </div>
+            {accounts.length > 0 && (
+                <Table className='m-4'>
+                    <TableCaption>A list of your employees.</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead className="w-[100px]">ID</TableHead>
+                        <TableHead>Fullname</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Department</TableHead>
+                        <TableHead className="text-left">Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody> 
+                        {accounts.map((account) => (
+                            <TableRow>
+                            <TableCell className="font-medium">{ account.id }</TableCell>
+                            <TableCell className="font-medium">{ account.fullname }</TableCell>
+                            <TableCell className="font-medium">{ account.email }</TableCell>
+                            <TableCell className="font-medium">{ account.department }</TableCell>
+                            <TableCell className="text-left gap-2">
+                                <Button className="bg-green-500 hover:bg-green-700 text-white-500">
+                                        <Pencil className="cursor-pointer"></Pencil>
+                                </Button>
+                                <Button disabled={processing} onClick={() => handleDelete(account.id, account.fullname)} className="bg-red-500 hover:bg-red-700 text-white-500 m-2">
+                                    <Trash></Trash>
+                                </Button>
+                            </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            )}
         </AppLayout>
     );
 }
