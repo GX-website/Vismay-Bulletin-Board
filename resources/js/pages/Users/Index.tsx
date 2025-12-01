@@ -5,8 +5,7 @@ import { users_index } from '@/routes';
 // import { users } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { Megaphone, Trash, Pencil  } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Megaphone, Trash, Pencil, Plus } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 import {
@@ -30,6 +29,7 @@ interface Account {
     id: number,
     fullname: string,
     email: string,
+    position: string,
     department: string,
 }
 
@@ -38,7 +38,7 @@ interface PageProps{
         message?: string
     },
 
-    accounts: Account[]
+    accounts: Account[];
 }
 
 export default function Index() {
@@ -50,6 +50,7 @@ export default function Index() {
     const handleDelete = (id: number, fullname: string) => {
         if(confirm(`Do you want to delete employee ${id}. ${fullname}`)) {
             destroy(`/users/${id}`);
+            // destroy(route("users_destroy", id));
         }
     }
 
@@ -58,7 +59,10 @@ export default function Index() {
             <Head title="Users" />
             <div className='m-4'>
                 <Button asChild>
-                    <Link href='/users/create'>Add Employee</Link>
+                    <Link href='/users/create'>
+                        <Plus></Plus>
+                        Add Employee
+                    </Link>
                 </Button>
             </div>
             <div className='m-4'>
@@ -82,6 +86,7 @@ export default function Index() {
                         <TableHead className="w-[100px]">ID</TableHead>
                         <TableHead>Fullname</TableHead>
                         <TableHead>Email</TableHead>
+                        <TableHead>Position</TableHead>
                         <TableHead>Department</TableHead>
                         <TableHead className="text-left">Action</TableHead>
                         </TableRow>
@@ -89,18 +94,21 @@ export default function Index() {
                     <TableBody> 
                         {accounts.map((account) => (
                             <TableRow>
-                            <TableCell className="font-medium">{ account.id }</TableCell>
-                            <TableCell className="font-medium">{ account.fullname }</TableCell>
-                            <TableCell className="font-medium">{ account.email }</TableCell>
-                            <TableCell className="font-medium">{ account.department }</TableCell>
-                            <TableCell className="text-left gap-2">
-                                <Button className="bg-green-500 hover:bg-green-700 text-white-500">
-                                        <Pencil className="cursor-pointer"></Pencil>
-                                </Button>
-                                <Button disabled={processing} onClick={() => handleDelete(account.id, account.fullname)} className="bg-red-500 hover:bg-red-700 text-white-500 m-2">
-                                    <Trash></Trash>
-                                </Button>
-                            </TableCell>
+                                <TableCell className="font-medium">{ account.id }</TableCell>
+                                <TableCell className="font-medium">{ account.fullname }</TableCell>
+                                <TableCell className="font-medium">{ account.email }</TableCell>
+                                <TableCell className="font-medium">{ account.position }</TableCell>
+                                <TableCell className="font-medium">{ account.department }</TableCell>
+                                <TableCell className="text-left space-x-2">
+                                    <Link href={route('users_edit', account.id)}>
+                                        <Button className="bg-green-500 hover:bg-green-700 text-white-500">
+                                            <Pencil></Pencil>
+                                        </Button>
+                                    </Link>
+                                    <Button disabled={processing} onClick={() => handleDelete(account.id, account.fullname)} className="bg-red-500 hover:bg-red-700 text-white-500">
+                                        <Trash></Trash>
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
