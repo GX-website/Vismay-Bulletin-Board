@@ -13,7 +13,7 @@ import {
 import { dashboard, users_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, UserPlus } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, UserPlus, BookOpenText  } from 'lucide-react';
 import AppLogo from './app-logo';
 import { route } from 'ziggy-js';
 
@@ -24,9 +24,14 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'User Accounts',
+        title: 'Employees',
         href: users_index(),
         icon: UserPlus,
+    },
+    {
+        title: 'Department',
+        href: users_index(),
+        icon: BookOpenText,
     },
 ];
 

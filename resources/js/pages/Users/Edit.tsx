@@ -9,31 +9,42 @@ import { route } from 'ziggy-js';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CircleAlert  } from 'lucide-react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Create a New Account',
-        href: '/users/create',
-    },
-];
+// const breadcrumbs: BreadcrumbItem[] = [
+//     {
+//         title: 'Edit Employee Account',
+//         href: '/users/create',
+//     },
+// ];
 
+interface Account {
+    id: number,
+    fullname: string,
+    email: string,
+    position: string,
+    department: string
+}
 
-export default function Create() {
+interface Props {
+    accounts: Account
+}
 
-    const { data, setData, post, processing, errors } = useForm({
-        fullname: '',
-        email: '',
-        position: '',
-        department: '',
+export default function Edit({accounts} : Props) {
+
+    const { data, setData, put, processing, errors } = useForm({
+        fullname: accounts.fullname,
+        email: accounts.email,
+        position: accounts.position,
+        department: accounts.department
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('users_store'));
+        put(route('users_update', accounts.id))
     };
     
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create a New Account" />
+        <AppLayout breadcrumbs={[{title: 'Edit Employee Account', href: `/users/${accounts.id}/edit`}]}>
+            <Head title="Update an Account" />
             <div className='w-8/12 p-4'>
 
                 {/* Display Errors */}
@@ -52,7 +63,7 @@ export default function Create() {
                     </Alert>
                 )}
 
-                    <form onSubmit={handleSubmit} action="" className='space-y-4'>
+                    <form onSubmit={handleUpdate} action="" className='space-y-4'>
                         <div className='gap-1.5'>
                             <Label htmlFor="fullname" className='px-1'>Fullname</Label>
                             <Input placeholder="Fullname" value={data.fullname} onChange={e => setData('fullname', e.target.value)}></Input>
@@ -69,7 +80,7 @@ export default function Create() {
                             <Label htmlFor="department" className='px-1'>Department</Label>
                             <Input placeholder="Department" value={data.department} onChange={e => setData('department', e.target.value)}></Input>
                         </div>
-                        <Button type='submit'>Add Account</Button>
+                        <Button type='submit'>Update Employee</Button>
                     </form>
             </div>
         </AppLayout>

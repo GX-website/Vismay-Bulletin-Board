@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    protected $fillable = ['fullname', 'email', 'department'];
+    protected $fillable = ['fullname', 'email','position', 'department'];
 }
