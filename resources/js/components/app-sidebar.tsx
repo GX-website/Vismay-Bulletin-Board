@@ -10,10 +10,20 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, users_index } from '@/routes';
+import { dashboard, department_digital, department_finance, department_hr, department_itdepartment, users_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, UserPlus, BookOpenText  } from 'lucide-react';
+import { BookOpen,
+        Folder,
+        LayoutGrid,
+        UserPlus,
+        BookOpenText,
+        HandCoins,
+        MonitorCog,
+        FileUser,
+        BrainCircuit,
+        Megaphone
+    } from 'lucide-react';
 import AppLogo from './app-logo';
 import { route } from 'ziggy-js';
 
@@ -26,12 +36,23 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Employees',
         href: users_index(),
-        icon: UserPlus,
+        icon: UserPlus, 
     },
     {
         title: 'Department',
-        href: users_index(),
+        href: '',
         icon: BookOpenText,
+        children: [
+            {title: 'Finance', href: department_finance(), icon: HandCoins },
+            {title: 'IT Department', href: department_itdepartment(), icon: MonitorCog },
+            {title: 'HR', href: department_hr(), icon: FileUser},
+            {title: 'Digital Sale', href: department_digital(), icon: BrainCircuit},
+        ]
+    },
+    {
+        title: 'Company Updates',
+        href: '/',
+        icon: Megaphone,
     },
 ];
 

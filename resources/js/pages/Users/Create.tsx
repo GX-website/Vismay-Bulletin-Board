@@ -34,7 +34,7 @@ export default function Create() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create a New Account" />
-            <div className='w-8/12 p-4'>
+            <div className='flex items-center justify-center w-[100%] p-4 mx-auto'>
 
                 {/* Display Errors */}
 
@@ -52,7 +52,7 @@ export default function Create() {
                     </Alert>
                 )}
 
-                    <form onSubmit={handleSubmit} action="" className='space-y-4'>
+                    <form onSubmit={handleSubmit} action="" className='space-y-4 w-[500px] border p-8 rounded-xs'>
                         <div className='gap-1.5'>
                             <Label htmlFor="fullname" className='px-1'>Fullname</Label>
                             <Input placeholder="Fullname" value={data.fullname} onChange={e => setData('fullname', e.target.value)}></Input>
@@ -69,7 +69,7 @@ export default function Create() {
                             <Label htmlFor="department" className='px-1'>Department</Label>
                             <Input placeholder="Department" value={data.department} onChange={e => setData('department', e.target.value)}></Input>
                         </div>
-                        <Button type='submit'>Add Account</Button>
+                        <Button type='submit'>Submit</Button>
                     </form>
             </div>
         </AppLayout>

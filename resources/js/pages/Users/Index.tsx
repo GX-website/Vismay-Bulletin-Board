@@ -80,7 +80,7 @@ export default function Index() {
             </div>
             {accounts.length > 0 && (
                 <Table className='m-4'>
-                    <TableCaption>A list of your employees.</TableCaption>
+                    <TableCaption>A list of your employees. {accounts.length}</TableCaption>
                     <TableHeader>
                         <TableRow>
                         <TableHead className="w-[100px]">ID</TableHead>

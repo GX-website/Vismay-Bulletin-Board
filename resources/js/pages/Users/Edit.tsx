@@ -45,7 +45,7 @@ export default function Edit({accounts} : Props) {
     return (
         <AppLayout breadcrumbs={[{title: 'Edit Employee Account', href: `/users/${accounts.id}/edit`}]}>
             <Head title="Update an Account" />
-            <div className='w-8/12 p-4'>
+            <div className='flex items-center justify-center w-[100%] p-4 mx-auto'>
 
                 {/* Display Errors */}
 
@@ -63,7 +63,7 @@ export default function Edit({accounts} : Props) {
                     </Alert>
                 )}
 
-                    <form onSubmit={handleUpdate} action="" className='space-y-4'>
+                    <form onSubmit={handleUpdate} action="" className='space-y-4 w-[500px] border p-8 rounded-xs'>
                         <div className='gap-1.5'>
                             <Label htmlFor="fullname" className='px-1'>Fullname</Label>
                             <Input placeholder="Fullname" value={data.fullname} onChange={e => setData('fullname', e.target.value)}></Input>
