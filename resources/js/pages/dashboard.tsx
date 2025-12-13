@@ -50,7 +50,7 @@ export default function Dashboard() {
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
                         <div className='flex inline-flex gap-2 pl-2 pt-2'>
-                            <ChartNoAxesCombined/><h1 className='text-xl'>Sale</h1>
+                            <ChartNoAxesCombined/><h1 className='text-xl'>Sales</h1>
                         </div>
                     </div>
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
