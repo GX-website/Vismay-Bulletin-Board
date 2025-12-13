@@ -5,7 +5,7 @@ import { users_index } from '@/routes';
 // import { users } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { Megaphone, Trash, Pencil, Plus } from 'lucide-react';
+import { Megaphone, Trash2, Pencil, Plus } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 import {
@@ -101,12 +101,12 @@ export default function Index() {
                                 <TableCell className="font-medium">{ account.department }</TableCell>
                                 <TableCell className="text-left space-x-2">
                                     <Link href={route('users_edit', account.id)}>
-                                        <Button className="bg-green-500 hover:bg-green-700 text-white-500">
-                                            <Pencil></Pencil>
+                                        <Button className="bg-green-500 hover:bg-green-700 text-white-500 cursor-pointer">
+                                            <Pencil/>
                                         </Button>
                                     </Link>
-                                    <Button disabled={processing} onClick={() => handleDelete(account.id, account.fullname)} className="bg-red-500 hover:bg-red-700 text-white-500">
-                                        <Trash></Trash>
+                                    <Button disabled={processing} onClick={() => handleDelete(account.id, account.fullname)} className="bg-red-500 hover:bg-red-700 text-white-500 cursor-pointer">
+                                        <Trash2/>
                                     </Button>
                                 </TableCell>
                             </TableRow>

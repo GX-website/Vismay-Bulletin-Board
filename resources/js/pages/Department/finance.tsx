@@ -2,6 +2,8 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
+import Box from '@mui/material/Box';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,34 +27,55 @@ interface Props {
 
 export default function Finance({accounts} : Props) {
 
+    const columns: GridColDef<(typeof accounts)[number]>[] = [
+        { field: 'id', headerName: 'ID', flex: .3 },
+        {
+            field: 'fullname',
+            headerName: 'Fullname',
+            flex: 1,
+            editable: true,
+        },
+        {
+            field: 'email',
+            headerName: 'Email',
+            flex: 1,
+            editable: true,
+        },  
+        {
+            field: 'position',
+            headerName: 'Position',
+            flex: 1,
+            editable: true,
+        },
+        {
+            field: 'department',
+            headerName: 'Department',
+            description: 'This column has a value getter and is not sortable.',
+            sortable: false,
+            flex: 1,
+            valueGetter: (value, row) => `${row.department || ''} `,
+        },
+    ];
+
     return (
          <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Finance Department" />
-
-            <div className="p-6">
-                <h1 className="text-2xl font-bold mb-4">Finance Department</h1>
-
-                <table className="w-full border">
-                    <thead>
-                        <tr className="border-b">
-                            <th className='p-2'>ID</th>
-                            <th className="p-2">Full Name</th>
-                            <th className="p-2">Email</th>
-                            <th className="p-2">Position</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {accounts.map((acc) => (
-                            <tr key={acc.id} className="border-b text-center">
-                                <td className='p-2'>{acc.id}</td>
-                                <td className="p-2">{acc.fullname}</td>
-                                <td className="p-2">{acc.email}</td>
-                                <td className="p-2">{acc.position}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <Box sx={{ height: 500, width: '100%' }}>
+                <DataGrid
+                rows={accounts}
+                columns={columns}
+                initialState={{
+                pagination: {
+                paginationModel: {
+                pageSize: 5,
+                },
+                },
+                }}
+                pageSizeOptions={[5]}
+                checkboxSelection
+                disableRowSelectionOnClick
+                />
+            </Box>
         </AppLayout>
     );
 }

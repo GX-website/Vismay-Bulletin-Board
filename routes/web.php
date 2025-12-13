@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AdvisoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -35,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->name('department_hr');
     Route::get('/department/itdepartment', [DepartmentController::class, 'itdepartment'])
     ->name('department_itdepartment');
+    Route::get('/advisory/announcements', [AdvisoryController::class, 'announcements'])
+    ->name('advisory_announcements');
 });
 
 require __DIR__.'/settings.php';

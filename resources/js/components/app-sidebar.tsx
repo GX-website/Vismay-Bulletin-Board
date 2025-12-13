@@ -10,7 +10,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, department_digital, department_finance, department_hr, department_itdepartment, users_index } from '@/routes';
+import { advisory_announcements, dashboard, department_digital, department_finance, department_hr, department_itdepartment, users_index } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen,
@@ -22,7 +22,8 @@ import { BookOpen,
         MonitorCog,
         FileUser,
         BrainCircuit,
-        Megaphone
+        Megaphone,
+        FileText 
     } from 'lucide-react';
 import AppLogo from './app-logo';
 import { route } from 'ziggy-js';
@@ -51,8 +52,13 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Company Updates',
-        href: '/',
+        href: advisory_announcements(),
         icon: Megaphone,
+    },
+    {
+        title: 'Reports',
+        href: '',
+        icon: FileText,
     },
 ];
 
