@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function(){
         return Inertia::render('dashboard', [
             'accounts' => \App\Models\Account::all(),
+            'announcements' => \App\Models\Announcement::all(),
         ]);
     })->name('dashboard');
     Route::get('/users',[UserController::class, 'index'])->name('users_index');
@@ -28,6 +29,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/users/{account}/edit', [UserController::class, 'edit'])->name('users_edit');
     Route::put('/users/{account}', [UserController::class, 'update'])->name('users_update');
     Route::delete('/users/{account}', [UserController::class, 'destroy'])->name('users_destroy');
+
+    // Department Routes
     Route::get('/department/finance', [DepartmentController::class, 'finance'])
     ->name('department_finance');
     Route::get('/department/digital', [DepartmentController::class, 'digital'])
@@ -36,8 +39,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->name('department_hr');
     Route::get('/department/itdepartment', [DepartmentController::class, 'itdepartment'])
     ->name('department_itdepartment');
+
+    // Advisory Routes
     Route::get('/advisory/announcements', [AdvisoryController::class, 'announcements'])
-    ->name('advisory_announcements');
+        ->name('advisory_announcements');
+
+    Route::post('/advisory', [AdvisoryController::class, 'store'])
+        ->name('advisory_store');
 });
 
 require __DIR__.'/settings.php';

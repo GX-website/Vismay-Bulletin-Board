@@ -8,7 +8,8 @@ class Announcement extends Model
 {
     protected $fillable = [
         'title',
-        'date',
+        'startDate',
+        'endDate',
         'description',
     ];
 }
