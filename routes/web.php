@@ -23,6 +23,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'announcements' => \App\Models\Announcement::all(),
         ]);
     })->name('dashboard');
+
+    // Employee Routes
     Route::get('/users',[UserController::class, 'index'])->name('users_index');
     Route::post('/users', [UserController::class, 'store'])->name('users_store');
     Route::get('/users/create', [UserController::class, 'create'])->name('users_create');
@@ -42,10 +44,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Advisory Routes
     Route::get('/advisory/announcements', [AdvisoryController::class, 'announcements'])
-        ->name('advisory_announcements');
+    ->name('advisory_announcements');
+    // Delete Announcement
+    Route::delete('advisory/{announcements}', [AdvisoryController::class, 'destroy'])
+    ->name('advisory_destroy');
+    // Update Announcement
+    Route::get('advisory/{announcements}/edit', [AdvisoryController::class, 'edit'])
+    ->name('advisory_edit');
+    Route::put('advisory/{announcements}', [AdvisoryController::class, 'update'])
+    ->name('advisory_update');
 
     Route::post('/advisory', [AdvisoryController::class, 'store'])
-        ->name('advisory_store');
+    ->name('advisory_store');
 });
 
 require __DIR__.'/settings.php';
