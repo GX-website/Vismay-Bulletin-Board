@@ -58,9 +58,10 @@ export default function Digital({accounts} : Props) {
     ];
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs} >
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Digital Sales Department" />
-            <Box sx={{ height: 500, width: '100%' }}>
+            <Box sx={{ height: 'auto', width: '100%' }}
+                >
                 <DataGrid
                 rows={accounts}
                 columns={columns}
