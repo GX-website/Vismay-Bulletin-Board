@@ -92,20 +92,20 @@ export default function Index() {
                         </TableRow>
                     </TableHeader>
                     <TableBody> 
-                        {accounts.map((account) => (
+                        {accounts.map(({id, fullname, email, position, department}) => (
                             <TableRow>
-                                <TableCell className="font-medium">{ account.id }</TableCell>
-                                <TableCell className="font-medium">{ account.fullname }</TableCell>
-                                <TableCell className="font-medium">{ account.email }</TableCell>
-                                <TableCell className="font-medium">{ account.position }</TableCell>
-                                <TableCell className="font-medium">{ account.department }</TableCell>
+                                <TableCell className="font-medium">{ id }</TableCell>
+                                <TableCell className="font-medium">{ fullname }</TableCell>
+                                <TableCell className="font-medium">{ email }</TableCell>
+                                <TableCell className="font-medium">{ position }</TableCell>
+                                <TableCell className="font-medium">{ department }</TableCell>
                                 <TableCell className="text-left space-x-2">
-                                    <Link href={route('users_edit', account.id)}>
+                                    <Link href={route('users_edit', id)}>
                                         <Button className="bg-green-500 hover:bg-green-700 text-white-500 cursor-pointer">
                                             <Pencil/>
                                         </Button>
                                     </Link>
-                                    <Button disabled={processing} onClick={() => handleDelete(account.id, account.fullname)} className="bg-red-500 hover:bg-red-700 text-white-500 cursor-pointer">
+                                    <Button disabled={processing} onClick={() => handleDelete(id, fullname)} className="bg-red-500 hover:bg-red-700 text-white-500 cursor-pointer">
                                         <Trash2/>
                                     </Button>
                                 </TableCell>

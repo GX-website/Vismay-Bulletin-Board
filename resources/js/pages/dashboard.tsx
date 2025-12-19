@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import {motion, AnimatePresence, useAnimation} from "framer-motion";
 import { useEffect, useState } from 'react';
 import { start } from 'repl';
+import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -50,6 +51,13 @@ export default function Dashboard() {
 
     const { accounts, flash, announcements } = usePage<PageProps>().props;
     const today = new Date().toISOString().split('T')[0];
+    const {processing, delete: destroy} = useForm();
+
+    const handleDelete = (id: number, title: string) => {
+        if(confirm(`Do you want to delete announcement ${id}: ${title} `)) {
+            destroy(`/advisory/${id}`);
+        }
+    }
         
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -111,9 +119,10 @@ export default function Dashboard() {
 
                             {/* {announcements.map((announcement) => ( */}
                             {announcements
-                                 .filter(({ startDate, endDate}) =>
+                                .filter(({ startDate, endDate}) =>
                                         (startDate > today || endDate < today)
                                     )
+                                .sort((a, b) => b.id - a.id) // sort for latest input from top
                                 .map(({ id, title, description, startDate, endDate }) =>(
                                 <div    
                                     key={id}
@@ -129,7 +138,7 @@ export default function Dashboard() {
                                         )}
                                     </div>
 
-                                    <div className="flex-1 col-span-5 text-muted-foreground line-clamp-2">
+                                    <div className="flex-1 col-span-4 text-muted-foreground line-clamp-2">
                                         {description}
                                     </div>
 
@@ -143,7 +152,7 @@ export default function Dashboard() {
 
 
                                     <div className="col-span-1 w-[100px] flex justify-end gap-2">
-                                        <Link href="#">
+                                        <Link href={route('advisory_edit', id)}>
                                             <Button
                                                 size="icon"
                                                 className="bg-green-500 hover:bg-green-700 cursor-pointer relative">
@@ -153,6 +162,10 @@ export default function Dashboard() {
                                         </Link>
 
                                         <Button 
+                                            disabled={processing}
+                                            onClick={() =>
+                                                handleDelete(id, title)
+                                            }
                                             size="icon" 
                                             className="bg-red-500 hover:bg-red-700 cursor-pointer">
                                                 <Trash2 className="h-4 w-4" />
@@ -183,6 +196,7 @@ export default function Dashboard() {
                             .filter(({ startDate, endDate}) => 
                                     startDate <= today &&
                                     endDate >= today)
+                            .sort((a, b) => b.id - a.id)
                             .map(({id,title, description, startDate, endDate}) =>  (
                             <div className="grid grid-cols-12 gap-4 border-none pb-2 pt-2 text-sm font-semibold text-muted-foreground" key={id}>
                                 <div className='self-center col-span-4'>
