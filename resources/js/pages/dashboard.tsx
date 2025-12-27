@@ -13,10 +13,12 @@ import { BookOpen,
         Trash2
     } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SaleRate from '@/components/sale-rate';
 import {motion, AnimatePresence, useAnimation} from "framer-motion";
 import { useEffect, useState } from 'react';
 import { start } from 'repl';
 import { route } from 'ziggy-js';
+import { stringify } from 'querystring';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -42,14 +44,14 @@ interface Announcement {
     description: string;
 }
 
-interface PageProps {
+interface PageJosh {
     accounts: Account[];
     announcements: Announcement[];
 }
 
 export default function Dashboard() {
 
-    const { accounts, flash, announcements } = usePage<PageProps>().props;
+    const { accounts, flash, announcements } = usePage<PageJosh>().props;
     const today = new Date().toISOString().split('T')[0];
     const {processing, delete: destroy} = useForm();
 
@@ -69,14 +71,28 @@ export default function Dashboard() {
                         <div className='flex inline-flex gap-2 pl-2 pt-2'>
                             <FileUser/> <h1 className='text-xl'>Total Employees</h1>
                         </div>
-                        <div className="relative z-10 p-4 text-7xl font-bold flex items-center justify-center w-[100%] h-[100%] mt-[-20px]">
+                        <div className="relative z-10 p-4 text-6xl font-bold flex items-center justify-center w-[100%] h-[100%] mt-[-20px]">
                             {accounts.length}
                         </div>
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                    <div className="relative flex flex-col aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
                         <div className='flex inline-flex gap-2 pl-2 pt-2'>
                             <ChartNoAxesCombined/><h1 className='text-xl'>Sales</h1>
+                        </div>
+                        <div className='border-y flex justify-center flex-1 justify-center'>
+                            <SaleRate rate_status={86}/>
+                        </div>
+                        <div className='font-light text-[14px] h-[40px] flex flex-row items-center p-2'>
+                            <div className='flex-1 shadow-1'>
+                                Total sales: <span className='text-green-500'>21M..</span>
+                            </div>
+                            <div className='flex-1'>
+                                Average: 89%..
+                            </div>
+                            <div className='flex-1'>
+                                Target: 95%..
+                            </div>
                         </div>
                     </div>
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
@@ -116,8 +132,7 @@ export default function Dashboard() {
                                     No announcements found
                                 </div>
                             )}
-
-                            {/* {announcements.map((announcement) => ( */}
+                            
                             {announcements
                                 .filter(({ startDate, endDate}) =>
                                         (startDate > today || endDate < today)
@@ -185,7 +200,7 @@ export default function Dashboard() {
                             <div className="col-span-4">Title</div>
                             <div className="col-span-5">Description</div>
                             <div className="col-span-2">End Date</div>
-                            <div className="col-span-1 text-right">Actions</div>
+                            <div className="col-span-1 text-right">Status</div>
                         </div>
                         {announcements.length === 0 && (
                             <div className="py-6 text-center text-muted-foreground">
